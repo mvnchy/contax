@@ -2,7 +2,7 @@ const app = Vue.createApp({
   data () {
     return {
       message: 'quick test for vue.',
-      Username: ''
+      username: '4IIII'
     }
   }
 }).mount('#app')
