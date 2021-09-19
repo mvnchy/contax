@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <script type='text/javascript' src="https://unpkg.com/vue@next"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js"></script>
 </head>
 <body>
 <div id="app">
@@ -21,5 +23,23 @@
 </body>
 <script type='text/javascript' src="/app.js"></script>
 <script type='text/javascript' src="/db.js"></script>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAdt3ZvJe8GEDxW5YVc2uKkrx3g67tXgZI",
+    authDomain: "contax-2b7ab.firebaseapp.com",
+    projectId: "contax-2b7ab",
+    storageBucket: "contax-2b7ab.appspot.com",
+    messagingSenderId: "512745151185",
+    appId: "1:512745151185:web:29133d8b91e5ad9f8a83f0"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+</script>
 </html>
