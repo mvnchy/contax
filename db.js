@@ -18,26 +18,38 @@ const firebaseConfig = initializeApp({
 const db = getFirestore();
 
 
+// Vue ROuterss
+const routes = [
+  { path: '/', component: Home },
+  { path: '/edit', component: Edit },
+  { path: '/add', component: Add },
+  { path: '/contact', component: Contact }
+
+]
+
+const router = VueRouter.createRouter({
+  history: VueRouter.createWebHashHistory(),
+  routes,
+})
 
 // Vue instance 
 
 const app = Vue.createApp({
-  data () {
-    return {
+  // data () {
+  //   return {
+  //     dat:
+  //     {
+  //       fname: 'Kevin',
+  //       lname: 'Durant',
+  //       email: 'orange@juice.ca',
+  //       phone: '613-444-7777',
+  //       address: '289 Livingston St, Brooklyn, NY 11217-1001'
+  //     },
 
-      dat:
-      {
-        fname: 'Kevin',
-        lname: 'Durant',
-        email: 'orange@juice.ca',
-        phone: '613-444-7777',
-        address: '289 Livingston St, Brooklyn, NY 11217-1001'
-      },
-
-      no: ['Jorja Smith ', 'Thomas Train', 'Frank Ocean', 'Jaiah Laffin', 'Jose Santos', 'Kyrie Irving'],
-      search: ''
-    }
-  },
+  //     no: ['Jorja Smith ', 'Thomas Train', 'Frank Ocean', 'Jaiah Laffin', 'Jose Santos', 'Kyrie Irving'],
+  //     search: ''
+  //   }
+  // },
   methods: {
     async tester () {
 
@@ -56,7 +68,10 @@ const app = Vue.createApp({
       })
     }
   }
-}).mount('#app')
+
+}).use(router).mount('#app')
+
+
 
 
 
