@@ -24,9 +24,18 @@ const db = getFirestore();
 const app = Vue.createApp({
   data () {
     return {
-      message: 'quick test for vue.',
-      username: '4IIII',
-      Name: ''
+
+      dat:
+      {
+        fname: 'Kevin',
+        lname: 'Durant',
+        email: 'orange@juice.ca',
+        phone: '613-444-7777',
+        address: '289 Livingston St, Brooklyn, NY 11217-1001'
+      },
+
+      no: ['Jorja Smith ', 'Thomas Train', 'Frank Ocean', 'Jaiah Laffin', 'Jose Santos', 'Kyrie Irving'],
+      search: ''
     }
   },
   methods: {
@@ -37,6 +46,14 @@ const app = Vue.createApp({
         this.Name = doc.data().firstName;
       })
       // console.log('method test')
+    }
+  },
+  computed: {
+    ft: function () {
+      return this.no.filter((con) => {
+        const nm = con
+        return nm.toLowerCase().includes(this.search.toLowerCase())
+      })
     }
   }
 }).mount('#app')
