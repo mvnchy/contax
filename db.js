@@ -122,10 +122,20 @@ const Contact = {
     }
   },
   mounted: async function () {
-
+    // const holder = []
+    // const idd = await getDocs(collection(db, 'contacts'));
+    // idd.forEach(kk => holder.push({
+    //   docId: kk.id
+    // }))
+    // this.docId = holder
+    console.log(this.docId)
     const snap = await getDoc(doc(db, 'contacts', this.docId)).then(waka => {
 
       if (waka.exists) {
+        console.log(this.docId)
+
+
+        // console.log(waka.id)
         this.contax.first = waka.data().firstName
         this.contax.last = waka.data().lastName
         this.contax.email = waka.data().email
@@ -136,7 +146,7 @@ const Contact = {
 
 
 
-    console.log('test')
+
   },
 
   template: `
@@ -146,7 +156,7 @@ const Contact = {
 
   <div class="row col-12">
     <router-link to='/' style='text-decoration:none;' class="col-6">Back</router-link>
-    <router-link to='/edit' style='text-decoration:none;' class="col-6 text-end">Edit</router-link>
+    <router-link :to="'/contact/edit/'+this.docId" style='text-decoration:none;' class="col-6 text-end">Edit</router-link>
   </div>
   <hr class="solid">
 
@@ -263,21 +273,36 @@ const Home = {
 /********************  Edit component  ***********************/
 
 const Edit = {
-
+  props: ['docId'],
   data () {
     return {
-      dat:
-      {
-        fname: 'Kevin',
-        lname: 'Durant',
-        email: 'orange@juice.ca',
-        phone: '613-444-7777',
-        address: '289 Livingston St, Brooklyn, NY 11217-1001'
-      },
-
-      no: ['Jorja Smith ', 'Thomas Train', 'Frank Ocean', 'Jaiah Laffin', 'Jose Santos', 'Kyrie Irving'],
-      search: ''
+      contax: {
+        first: '',
+        last: '',
+        email: '',
+        phone: '',
+        address: ''
+      }
     }
+  },
+  mounted: async function () {
+    console.log(this.docId)
+    const snap = await getDoc(doc(db, 'contacts', this.docId)).then(waka => {
+
+      if (waka.exists) {
+        // console.log(wakla.data())
+
+        this.contax.first = waka.data().firstName
+        this.contax.last = waka.data().lastName
+        this.contax.email = waka.data().email
+        this.contax.phone = waka.data().phone
+        this.contax.address = waka.data().address
+      }
+    })
+
+
+
+
   },
 
 
@@ -297,11 +322,11 @@ const Edit = {
     <div class="row col-12">
 
         <div class="col-6">
-          <input type="text" v-model='dat.fname' class='form-control my-2 '>
+          <input type="text" v-model='contax.first' class='form-control my-2 '>
         </div>
 
         <div class="col-6">
-          <input type="text" v-model='dat.lname' class='form-control my-2'>
+          <input type="text" v-model='contax.last' class='form-control my-2'>
         </div>
 
     </div>
@@ -309,17 +334,17 @@ const Edit = {
     <div class="row col-12" >
 
       <div class="col-6">
-        <input type='email' v-model='dat.email' class='form-control my-2 '>
+        <input type='email' v-model='contax.email' class='form-control my-2 '>
       </div>
       <div class="col-6">
-        <input type='tel' v-model='dat.phone' class="form-control my-2 ">
+        <input type='tel' v-model='contax.phone' class="form-control my-2 ">
       </div>
 
     </div>
 
     <div class="row col-12">
       <div class="col">
-         <input type="text" v-model='dat.address' class="col my-2 form-control ">
+         <input type="text" v-model='contax.address' class="col my-2 form-control ">
       </div>
     </div> 
   
@@ -351,25 +376,28 @@ const Edit = {
 
 
 
+/********************  Vue  - START ***********************/
 
-/********************  Vue Routers - START ***********************/
-
+/* routes */
 const routes = [
   { path: '/', component: Home },
-  { path: '/edit', component: Edit },
+  { path: '/contact/edit/:docId', component: Edit, props: true },
   { path: '/add', component: Add },
   // { path: '/contact', component: Contact },
   { path: '/contact/:docId', component: Contact, props: true }
 
 ]
+
+/*router instance */
 const router = VueRouter.createRouter({
   history: VueRouter.createWebHashHistory(),
   routes,
 })
 
+
+
+
 /********************  Vue instance ***********************/
-
-
 
 const app = Vue.createApp({
 
