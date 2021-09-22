@@ -2,7 +2,7 @@
 
 // firbase libraries  
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
-import { getFirestore, doc, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js";
+import { getFirestore, doc, setDoc, updateDoc, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js";
 
 // database info
 const firebaseConfig = initializeApp({
@@ -157,7 +157,7 @@ const Contact = {
     {{ contax.first }} {{contax.last}}
   </div>
   <hr class="solid">
-  
+
   <div class="col-12">Phone</div>
   <div class="col-6 my-2">{{ contax.phone }} </div> 
   <hr class="solid">
