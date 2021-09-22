@@ -1,6 +1,6 @@
-/********************  firebase / firestore ***********************/
+/********************  firebase / firestore START ***********************/
 
-// libraries  
+// firbase libraries  
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js";
 
@@ -16,8 +16,15 @@ const firebaseConfig = initializeApp({
 
 // firestore init
 const db = getFirestore();
+/********************  firebase / firestore END ***********************/
 
 
+
+/* these were supposed to be on it's on file but firebase has updated since I lasted used it. I couldn't import firebase libraries outside this db.js module script because the updated firebase works best with a web bundler(from my understanding). I chose not to go that route as I had already took too long on this project due to documentation surfing with Vue.js 3 and firebase upgrades. I have other projects I would like to start. 
+
+
+
+/****************** Hypothetical Vue Components - START *****************/
 
 
 
@@ -96,7 +103,7 @@ const Add = {
   `
 }
 
-/********************  Contact card component ***********************/
+/********************  Info card ***********************/
 
 const Contact = {
 
@@ -221,8 +228,6 @@ const Home = {
 
 }
 
-
-
 /********************  Edit component  ***********************/
 
 const Edit = {
@@ -306,6 +311,7 @@ const Edit = {
 }
 
 
+/****************** Hypothetical Vue Components - END *****************/
 
 
 
@@ -314,13 +320,7 @@ const Edit = {
 
 
 
-
-
-
-
-
-
-/********************  Vue Routers ***********************/
+/********************  Vue Routers - START ***********************/
 
 const routes = [
   { path: '/', component: Home },
@@ -360,3 +360,6 @@ const app = Vue.createApp({
   }
 
 }).use(router).mount('#app')
+
+
+/********************  Vue  - END ***********************/
