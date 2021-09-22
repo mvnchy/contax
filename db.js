@@ -2,7 +2,7 @@
 
 // firbase libraries  
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js";
+import { getFirestore, doc, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js";
 
 // database info
 const firebaseConfig = initializeApp({
@@ -16,6 +16,7 @@ const firebaseConfig = initializeApp({
 
 // firestore init
 const db = getFirestore();
+
 /********************  firebase / firestore END ***********************/
 
 
@@ -106,23 +107,38 @@ const Add = {
 /********************  Info card ***********************/
 
 const Contact = {
-
+  props: ['docId'],
   data () {
     return {
-      dat:
-      {
-        fname: 'Kevin',
-        lname: 'Durant',
-        email: 'orange@juice.ca',
-        phone: '613-444-7777',
-        address: '289 Livingston St, Brooklyn, NY 11217-1001'
+      contax: {
+        first: '',
+        last: '',
+        email: '',
+        phone: '',
+        address: ''
       },
-
-      no: ['Jorja Smith ', 'Thomas Train', 'Frank Ocean', 'Jaiah Laffin', 'Jose Santos', 'Kyrie Irving'],
+      // no: ['Jorja Smith ', 'Thomas Train', 'Frank Ocean', 'Jaiah Laffin', 'Jose Santos', 'Kyrie Irving'],
       search: ''
     }
   },
+  mounted: async function () {
+    // const docRef = doc(db, 'contacts', 'ZsRUhBzXT15j2hwhQPZk');
+    // console.log(typeof this.docId)
+    const snap = await getDoc(doc(db, 'contacts', this.docId)).then(waka => {
 
+      if (waka.exists) {
+        this.contax.first = waka.data().firstName
+        this.contax.last = waka.data().lastName
+        this.contax.email = waka.data().email
+        this.contax.phone = waka.data().phone
+        this.contax.address = waka.data().address
+      }
+    })
+
+
+
+    console.log('test')
+  },
 
   template: `
   
@@ -139,21 +155,21 @@ const Contact = {
 
 
   <div class="col-12 mt-5 mb-4 display-4 text-start">
-    {{ dat.fname }} {{dat.lname}}
+    {{ contax.first }} {{contax.last}}
   </div>
   <hr class="solid">
 
   <div class="col-12 mb-2">Email</div>
-  <a class="col-6 ">{{ dat.email }} </a> 
+  <a class="col-6 ">{{ contax.email }} </a> 
   <hr class="solid">
 
   <div class="col-12">Phone</div>
-  <div class="col-6 my-2">{{ dat.phone }} </div> 
+  <div class="col-6 my-2">{{ contax.phone }} </div> 
   <hr class="solid">
 
 
   <div class="col-12">Address</div>
-  <div class="col-6 my-2">{{ dat.address }} </div>
+  <div class="col-6 my-2">{{ contax.address }} </div>
   
 
 
@@ -177,20 +193,33 @@ const Home = {
       search: ''
     }
   },
-  // mounted: async function () {
+  mounted: async function () {
 
+    // retrieves data from firestore  
 
-  //   const shot = await getDocs(collection(db, 'contacts'));
-  //   shot.forEach((doc) => {
-  //     this.contax = doc.data();
-  //   })
-  //   // console.log('method test')
+    const shot = await getDocs(collection(db, 'contacts'));
+    const dat = []
+    shot.forEach(doc => dat.push({
+      docId: doc.id,
+      fname: doc.data().firstName,
+      lname: doc.data().lastName,
+      email: doc.data().email,
+      phone: doc.data().phone,
+      address: doc.data().address,
+    }))
+    this.contax = dat
+    console.log(this.contax)
 
-  // },
+  },
   computed: {
+
+    // search function 
+
+
     ft: function () {
-      return this.no.filter((con) => {
-        const nm = con
+      return this.contax.filter((con) => {
+        const nm = con.fname + ' ' + con.lname
+
         return nm.toLowerCase().includes(this.search.toLowerCase())
       })
     }
@@ -217,7 +246,10 @@ const Home = {
 
   <div class="row">
     <input v-model='search' class="form-control my-3" placeholder="Search" type="search">
-    <router-link to='/contact' class ="list-group-item mt- form-control p3" v-for='loko in ft'>{{ loko }}</router-link>
+    <li class='list-group-item form-control p3' v-for='loko in ft'>
+    <router-link style="text-decoration: none; color:grey " :to="'/contact/'+loko.docId" >{{ loko.fname }} {{loko. lname}} </router-link>
+
+  </li>
   </div>
 
 
@@ -326,7 +358,8 @@ const routes = [
   { path: '/', component: Home },
   { path: '/edit', component: Edit },
   { path: '/add', component: Add },
-  { path: '/contact', component: Contact }
+  // { path: '/contact', component: Contact },
+  { path: '/contact/:docId', component: Contact, props: true }
 
 ]
 const router = VueRouter.createRouter({
