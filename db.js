@@ -122,8 +122,7 @@ const Contact = {
     }
   },
   mounted: async function () {
-    // const docRef = doc(db, 'contacts', 'ZsRUhBzXT15j2hwhQPZk');
-    // console.log(typeof this.docId)
+
     const snap = await getDoc(doc(db, 'contacts', this.docId)).then(waka => {
 
       if (waka.exists) {
@@ -158,14 +157,15 @@ const Contact = {
     {{ contax.first }} {{contax.last}}
   </div>
   <hr class="solid">
+  
+  <div class="col-12">Phone</div>
+  <div class="col-6 my-2">{{ contax.phone }} </div> 
+  <hr class="solid">
 
   <div class="col-12 mb-2">Email</div>
   <a class="col-6 ">{{ contax.email }} </a> 
   <hr class="solid">
 
-  <div class="col-12">Phone</div>
-  <div class="col-6 my-2">{{ contax.phone }} </div> 
-  <hr class="solid">
 
 
   <div class="col-12">Address</div>
