@@ -2,7 +2,7 @@
 
 // firbase libraries  
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
-import { getFirestore, doc, setDoc, updateDoc, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js";
+import { getFirestore, doc, addDoc, updateDoc, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js";
 
 // database info
 const firebaseConfig = initializeApp({
@@ -35,20 +35,26 @@ const Add = {
 
   data () {
     return {
-      dat:
+      contax:
       {
-        fname: 'Kevin',
-        lname: 'Durant',
-        email: 'orange@juice.ca',
-        phone: '613-444-7777',
-        address: '289 Livingston St, Brooklyn, NY 11217-1001'
+        fname: '',
+        lname: '',
+        email: '',
+        phone: '',
+        address: ''
       },
 
-      no: ['Jorja Smith ', 'Thomas Train', 'Frank Ocean', 'Jaiah Laffin', 'Jose Santos', 'Kyrie Irving'],
-      search: ''
+      no: ['Jorja Smith ', 'Thomas Train', 'Frank Ocean', 'Jaiah Laffin', 'Jose Santos', 'Kyrie Irving']
     }
   },
-
+  methods: {
+    async addy () {
+      console.log(this.contax.fname)
+      await addDoc(collection(db, 'contacts'), {
+        firstName: this.contax.fname
+      })
+    }
+  },
   template: `
 
 
@@ -67,10 +73,10 @@ const Add = {
     <div class="row col-12">
 
         <div class="col-6">
-          <input type="text" placeholder="First Name" class='form-control my-2 '>
+          <input type="text" placeholder="First Name" v-model='contax.fname' class='form-control my-2 '> 
         </div>
         <div class="col-6">
-          <input type="text" placeholder="Last Name" class="form-control my-2 ">
+          <input type="text" placeholder="Last Name" v-model='contax.lname' class="form-control my-2 ">
         </div>
 
     </div>
@@ -78,10 +84,10 @@ const Add = {
     <div class="row col-12">
 
       <div class="col-6">
-        <input type="email" placeholder="Email" class='form-control my-2 '>
+        <input type="email" placeholder="Email" v-model='contax.email' class='form-control my-2 '>
       </div>
       <div class="col-6">
-        <input type="tel" placeholder="Phone" class="form-control my-2 ">
+        <input type="tel" placeholder="Phone" v-model='contax.phone' class="form-control my-2 ">
       </div>
 
   </div>
@@ -89,13 +95,13 @@ const Add = {
 
   <div class="row col-12">
     <div class="col">
-       <input type="text" placeholder="address" class="col my-2 form-control ">
+       <input type="text" placeholder="address" v-model='contax.address' class="col my-2 form-control ">
     </div>
   </div> 
 
     <div class="row col-12">
         <div class="col">
-           <router-link to='/' class="btn btn-primary form-control">Add Contact</router-link>
+           <router-link to='/' class="btn btn-primary form-control" @click='addy'>Add Contact</router-link>
         </div>
   </div>
 
@@ -321,7 +327,7 @@ const Edit = {
     <div class="row">
               <div class="col-6 display-6">Edit Contact</div>
               <div class="col-6 text-end align-self-center">
-                <router-link @click='uppity' style="text-decoration: none;" :to="'/contact/'+this.docId">Save</router-link>
+                <router-link @click='uppity' style="text-decoration: none;"d :to="'/contact/'+this.docId">Save</router-link>
               </div>
     </div>
 
@@ -330,11 +336,11 @@ const Edit = {
       <div class="row col-12">
 
           <div class="col-6">
-            <input type="text" v-model='contax.first' class='form-control my-2 '>
+            <input type="text" v-model='contax.first' placeholder='First name' class='form-control my-2 '> 
           </div>
 
           <div class="col-6">
-            <input type="text" v-model='contax.last' class='form-control my-2'>
+            <input type="text" v-model='contax.last' placeholder='Last name' class='form-control my-2'>
           </div>
 
       </div>
@@ -342,17 +348,18 @@ const Edit = {
       <div class="row col-12" >
 
         <div class="col-6">
-          <input type='email' v-model='contax.email' class='form-control my-2 '>
+          <input type='email' placeholder='Email' v-model='contax.email'
+           class='form-control my-2 '>
         </div>
         <div class="col-6">
-          <input type='tel' v-model='contax.phone' class="form-control my-2 ">
+          <input type='tel' v-model='contax.phone' placeholder='Phone' class="form-control my-2 ">
         </div>
 
       </div>
 
       <div class="row col-12">
         <div class="col">
-          <input type="text" v-model='contax.address' class="col my-2 form-control ">
+          <input type="text" v-model='contax.address' placeholder='Address' class="col my-2 form-control ">
         </div>
       </div> 
     
