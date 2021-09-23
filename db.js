@@ -2,7 +2,7 @@
 
 // firbase libraries  
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
-import { getFirestore, doc, addDoc, updateDoc, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js";
+import { getFirestore, doc, deleteDoc, addDoc, updateDoc, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js";
 
 // database info
 const firebaseConfig = initializeApp({
@@ -303,6 +303,10 @@ const Edit = {
         phone: this.contax.phone,
         address: this.contax.address
       })
+    },
+
+    async remo () {
+      await deleteDoc(doc(db, 'contacts', this.docId))
     }
   },
 
@@ -327,7 +331,7 @@ const Edit = {
     <div class="row">
               <div class="col-6 display-6">Edit Contact</div>
               <div class="col-6 text-end align-self-center">
-                <router-link @click='uppity' style="text-decoration: none;"d :to="'/contact/'+this.docId">Save</router-link>
+                <router-link @click='uppity' style="text-decoration: none;"  :to="'/contact/'+this.docId">Save</router-link>
               </div>
     </div>
 
@@ -365,7 +369,7 @@ const Edit = {
     
 
       <div class="row col-12">
-          <router-link to='/' class="col">
+          <router-link to='/' class="col" @click='remo' >
             <button class="btn btn-secondary form-control">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
