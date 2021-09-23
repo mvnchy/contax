@@ -313,7 +313,7 @@ const Edit = {
     <div class="row">
               <div class="col-6 display-6">Edit Contact</div>
               <div class="col-6 text-end align-self-center">
-                <router-link @click='uppity' style="text-decoration: none;" to='/'>Save</router-link>
+                <router-link @click='uppity' style="text-decoration: none;" :to="'/contact/'+this.docId">Save</router-link>
               </div>
     </div>
 
