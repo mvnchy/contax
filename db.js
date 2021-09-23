@@ -288,7 +288,15 @@ const Edit = {
   },
   methods: {
     async uppity () {
-      console.log('connection secured')
+      console.log('connection secured ' + this.docId)
+      const dbRef = doc(db, 'contacts', this.docId)
+      await updateDoc(dbRef, {
+        firstName: this.contax.first,
+        lastName: this.contax.last,
+        email: this.contax.email,
+        phone: this.contax.phone,
+        address: this.contax.address
+      })
     }
   },
 
