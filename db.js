@@ -157,7 +157,7 @@ const Contact = {
 
   template: `
   
-  
+  <transition name='slide' mode='out-in'>
   <section class="col mt-5">
 
   <div class="row col-12">
@@ -174,17 +174,17 @@ const Contact = {
   </div>
   <hr class="solid">
 
-  <div class="col-12">Phone</div>
+  <div class="title col-12">Phone</div>
   <div class="col-6 my-2">{{ contax.phone }} </div> 
   <hr class="solid">
 
-  <div class="col-12 mb-2">Email</div>
+  <div class="title col-12 mb-2">Email</div>
   <a class="col-6 ">{{ contax.email }} </a> 
   <hr class="solid">
 
 
 
-  <div class="col-12">Address</div>
+  <div class="title col-12">Address</div>
   <div class="col-6 my-2">{{ contax.address }} </div>
   
 
@@ -194,7 +194,7 @@ const Contact = {
 
 </section>
 
-  
+  </transition>
   `
 }
 /********************  H O M E   component ***********************/
@@ -263,11 +263,12 @@ const Home = {
   <div class="row">
     <input v-model='search' class="form-control my-3" placeholder="Search" type="search">
     <li class='list-group-item form-control p3' v-for='loko in ft'>
-    <router-link style="text-decoration: none; color:grey " :to="'/contact/'+loko.docId" >{{ loko.fname }} {{loko. lname}} </router-link>
+
+    <router-link style="text-decoration: none; color:grey ;" :to="'/contact/'+loko.docId" >{{ loko.fname }} {{loko. lname}} </router-link>
 
   </li>
   </div>
-
+ 
 
 </section>
 `
@@ -352,7 +353,7 @@ const Edit = {
       <div class="row col-12" >
 
         <div class="col-6">
-          <input type='email' placeholder='Email' v-model='contax.email'
+          <input type='text' placeholder='Email' v-model='contax.email'
            class='form-control my-2 '>
         </div>
         <div class="col-6">
@@ -419,7 +420,10 @@ const router = VueRouter.createRouter({
 /********************  Vue instance ***********************/
 
 const app = Vue.createApp({
-
+  data () {
+    return {
+    }
+  },
   methods: {
     async tester () {
 
