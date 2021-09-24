@@ -51,7 +51,11 @@ const Add = {
     async addy () {
       console.log(this.contax.fname)
       await addDoc(collection(db, 'contacts'), {
-        firstName: this.contax.fname
+        firstName: this.contax.fname,
+        lastName: this.contax.lname,
+        address: this.contax.address,
+        phone: this.contax.phone,
+        email: this.contax.email
       })
     }
   },
